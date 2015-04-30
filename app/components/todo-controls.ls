@@ -30,7 +30,7 @@ module.exports = class TodoHeader extends React.Component
 
       d.ul class-name: "filters",
         d.li d.a do
-          class-name: "selected" if !@props.mode or @props.mode is ''
+          class-name: "selected" unless @props.mode in <[active completed]>
           href: "/"
 
           "All"
