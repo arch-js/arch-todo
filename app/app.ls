@@ -15,10 +15,10 @@ module.exports = arch.application.create do
     initial-state
 
   start: (app-state) ->
-    app-state.get \state.message .update -> 'I was updated!'
 
   routes: ->
     page = arch.routes.page
 
     arch.routes.define do
+      page '/:filter', todoapp
       page '*', todoapp

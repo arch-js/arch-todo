@@ -6,6 +6,7 @@ module.exports = class TodoHeader extends React.Component
   submit: (e) ~>
     e.prevent-default!
     todo = @props.todo.deref!
+
     @props.todo.update -> ''
     @props.todos.update ~>
       it ++ do
@@ -15,6 +16,7 @@ module.exports = class TodoHeader extends React.Component
 
   render: ->
     todo = @props.todo.deref!
+
     d.header class-name: 'header',
       d.h1 'todos'
       d.form do
@@ -24,4 +26,5 @@ module.exports = class TodoHeader extends React.Component
           placeholder: 'What needs to be done?'
           autofocus: true
           value: todo
-          on-change: (e) ~> @props.todo.update -> e.target.value
+          on-change: (e) ~>
+            @props.todo.update -> e.target.value
