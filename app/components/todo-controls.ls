@@ -30,19 +30,19 @@ module.exports = class TodoHeader extends React.Component
 
       d.ul class-name: "filters",
         d.li d.a do
-          class-name: "selected"
+          class-name: "selected" if !@props.mode or @props.mode is ''
           href: "/"
 
           "All"
 
         d.li d.a do
-          class-name: ""
+          class-name: "selected" if @props.mode is 'active'
           href: "/active"
 
           "Active"
 
         d.li d.a do
-          class-name: ""
+          class-name: "selected" if @props.mode is 'completed'
           href: "/completed"
 
           "Completed"

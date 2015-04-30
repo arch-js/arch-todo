@@ -20,5 +20,5 @@ module.exports = arch.application.create do
     page = arch.routes.page
 
     arch.routes.define do
-      page '/:filter', todoapp
+      page '/:mode', todoapp
       page '*', todoapp

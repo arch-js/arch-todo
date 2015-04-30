@@ -16,6 +16,7 @@ module.exports = class TodoRoute extends BaseRoute
   render: ->
     todo = @props.app-state.get 'state.todo'
     todos = @props.app-state.get 'state.todos'
+    mode = (@props.app-state.get 'route.params.mode' .deref!)
 
     layout do
       d.section class-name: 'todoapp',
@@ -23,8 +24,8 @@ module.exports = class TodoRoute extends BaseRoute
           todo: todo
           todos: todos
         if todos.length > 0
-          todo-list todos: todos
-        todo-controls todos: todos
+          todo-list todos: todos, mode: mode
+        todo-controls todos: todos, mode: mode
 
       d.footer class-name: 'info',
         d.p 'Double click to edit a todo'

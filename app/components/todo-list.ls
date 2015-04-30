@@ -1,6 +1,6 @@
-require! <[ arch classnames ]>
+require! <[ arch classnames ../lib/todos ]>
 
-{map, zip} = require 'prelude-ls'
+{map, zip, compact} = require 'prelude-ls'
 
 d = arch.DOM
 
@@ -14,6 +14,8 @@ module.exports = class TodoList extends React.Component
         |> zip [0 til @props.todos.length]
         |> map ([idx, todo]) ~>
           done = todo.get 'done'
+          return unless todos.state-match @props.mode, done.deref!
+
           editing = todo.get 'editing'
           task = todo.get 'task'
 
@@ -37,5 +39,5 @@ module.exports = class TodoList extends React.Component
                     todos = it.slice 0
                     todos.splice(idx, 1)
                     todos
-
             d.input class-name: 'edit', default-value: 'edit'
+        |> compact
