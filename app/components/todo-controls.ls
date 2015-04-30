@@ -4,6 +4,12 @@ require! <[ arch ../lib/todos ]>
 
 d = arch.DOM
 
+items-left = (list) ->
+  num = todos.active list.deref! .length
+  plural = if num isnt 1 then "s" else ""
+
+  "#num item#plural left"
+
 module.exports = class TodoHeader extends React.Component
   submit: (e) ~>
     e.prevent-default!
@@ -20,7 +26,7 @@ module.exports = class TodoHeader extends React.Component
 
     d.footer class-name: "footer",
       d.span class-name: "todo-count",
-        d.strong "0 item left"
+        d.strong items-left todo-list
 
       d.ul class-name: "filters",
         d.li d.a do
