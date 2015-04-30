@@ -13,7 +13,6 @@ module.exports = class TodoRoute extends BaseRoute
   get-title: -> super "Welcome!"
 
   render: ->
-    console.log 'render'
     todo = @props.app-state.get 'state.todo'
     todos = @props.app-state.get 'state.todos'
 

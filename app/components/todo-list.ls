@@ -1,6 +1,6 @@
 require! <[ arch classnames ]>
 
-{map} = require 'prelude-ls'
+{map, zip} = require 'prelude-ls'
 
 d = arch.DOM
 
@@ -11,21 +11,31 @@ module.exports = class TodoList extends React.Component
       d.label html-for: 'toggle-all', 'Mark all as complete'
       d.ul class-name: 'todo-list',
         @props.todos
-        |> map ->
-          done = it.get 'done'
-          is-done = done.deref!
+        |> zip [0 til @props.todos.length]
+        |> map ([idx, todo]) ~>
+          done = todo.get 'done'
+          editing = todo.get 'editing'
+          task = todo.get 'task'
+
           d.li do
             class-name: classnames do
-              completed: it.get 'done' .deref!
-              editing: it.get 'editing' .deref!
+              completed: done.deref!
+              editing: editing.deref!
             d.div class-name: 'view',
               d.input do
                 class-name: 'toggle'
                 type: 'checkbox'
-                checked: is-done
+                checked: done.deref!
                 on-change: (e) ->
-                  done.update -> !is-done
+                  done.update -> !it
               d.label do
-                it.get 'task' .deref!
-              d.button class-name: 'destroy'
+                task.deref!
+              d.button do
+                class-name: 'destroy'
+                on-click: (e) ~>
+                  @props.todos.update ->
+                    todos = it.slice 0
+                    todos.splice(idx, 1)
+                    todos
+
             d.input class-name: 'edit', default-value: 'edit'
